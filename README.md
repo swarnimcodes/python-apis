@@ -1,6 +1,7 @@
 # Python API Project
 
 ## Objective
+
 This project was made for my personal learning purposes.
 
 The APIs were first tested on my local machine. Then they were deployed to a remote Ubuntu server and tested via Postman.
@@ -8,6 +9,7 @@ The APIs were first tested on my local machine. Then they were deployed to a rem
 I have written Documentation for deploying a single Flask application on the Ubuntu server as well as another Documentation to deploy a second application alongside the first. The documentation's markdown source is also made available. The two apps can run on different ports on the same machine.
 
 # Technologies Used
+
 - Python
 - Flask
 - NumPy
@@ -17,8 +19,11 @@ I have written Documentation for deploying a single Flask application on the Ubu
 - Nginx
 - Ubuntu Server
 - Gunicorn
+
 # Documentation
+
 ### API 1
+
 This app contains two functions, one for addition ('/add') and another for subtraction ('/subtract'). One needs to feed two numbers in JSON format as so:
 ``` JSON
 {
