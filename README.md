@@ -51,12 +51,12 @@ And the API returns a simple response with in the following format:
 This API was made after performing Exploratory Data Analysis on the 'foodhub_order.csv' dataset. This API return useful information about the dataset. The usual graphs such as bar graphs and box plots can be plotted using the data this API returns when asked for.
 For example, the API costboxplotdata, returns the following JSON information:
 ``` JSON
-result = {
-    "min": minimum,
-    "Q1": q1,
-    "median": median,
-    "Q3": q3,
-    "max": maximum
+{
+    "Q1": 12.08,
+    "Q3": 22.2975,
+    "max": 35.41,
+    "median": 14.14,
+    "min": 4.47
 }
 ```
 From this the required box plot can be plotted for the column 'cost_of_the_order'.
