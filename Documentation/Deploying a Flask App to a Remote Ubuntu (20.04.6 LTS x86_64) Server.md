@@ -1,3 +1,7 @@
+# Deploying a Flask App to a Remote Ubuntu (20.04.6 LTS x86_64) Server
+
+<!-- This documentation was converted to a PDF using Obsidian -->
+
 This documentation will guide you to deploy your pre-existing flask app on a remote Ubuntu 20.04 Server.
 
 ## Step 1: Connect to the remote server via SSH

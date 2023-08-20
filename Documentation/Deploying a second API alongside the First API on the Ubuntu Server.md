@@ -1,3 +1,8 @@
+# Deploying a second API alongside the First API on the Ubuntu Server
+
+<!-- This documentation was converted to a PDF using Obsidian -->
+
+
 This guide explains the process of deploying a second Flask API or App alongside an already running API on the Ubuntu Server.
 
 ## Step 1: Connect to the remote server via SSH
