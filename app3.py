@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS
 import pandas as pd
 import io
 import json
@@ -13,15 +14,28 @@ from config import SECRET_KEY
 
 
 app = Flask(__name__)
+CORS(app, origins='*')
 app.config['SECRET_KEY'] = SECRET_KEY
+app.config['API_KEY'] = 'FnXhFbah1ueMMErmbPIqaA4eVDc7slYS'
 
-# payload data:
 users = {
     'userid_IkLZLl': {'username': 'swarnim', "password": 'qgpixg'},
     'userid_OCZ7OT': {'username': 'vedant', "password": 'oS3EHM'}
 }
 
 
+
+# API Key for Login
+def api_key_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        api_key = request.headers.get('x-api-key')
+
+        if api_key != app.config['API_KEY']:
+            return jsonify({'message': 'Invalid API key'}), 401
+
+        return f(*args, **kwargs)
+    return decorated
 
 
 # JWT Token Authentication
@@ -50,20 +64,30 @@ def token_required(f):
 # Load the CSV data into a DataFrame
 data = pd.read_csv('foodhub_order.csv')
 
+@app.route('/api_key', methods=["GET"])
+@api_key_required
+def verify_api_key():
+    return jsonify({"message": "API key is valid"})
 
 @app.route("/login", methods=['POST'])
+@api_key_required
 def login():
     auth = request.authorization
 
     if auth and auth.password == 'qgpixg' and auth.username == "swarnim":
-        token = jwt.encode({'user': auth.username, 'expires': (datetime.utcnow() + timedelta(minutes=120)).isoformat()}, app.config['SECRET_KEY'])
+        token = jwt.encode({'user': auth.username, 'expires': (datetime.utcnow() + timedelta(seconds=120)).isoformat()}, app.config['SECRET_KEY'])
         return jsonify({'token': token})
     return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
 
     # if auth and auth.username in users and auth.password == users[auth.username]['password']:
     #     token = jwt.encode({'user': auth.username, 'expires': (datetime.utcnow() + timedelta(minutes=120)).isoformat()}, app.config['SECRET_KEY'])
     #     return jsonify({'token': token})
     # return make_response('Could not verify!', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
+
+@app.route('/test', methods=['GET'])
+def test():
+    return jsonify({"message": "Hello, World!"}), 200
 
 @app.route('/jwt', methods=['GET'])
 @token_required
